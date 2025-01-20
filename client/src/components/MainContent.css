@@ -47,5 +47,25 @@
 .response-message.error {
   color: #e63946;
 }
+.edit-icon {
+  margin-left: 10px;
+  cursor: pointer;
+  color: #495057;
+  font-size: 1rem;
+}
+.edit-icon:hover {
+  color: #212121;
+}
+.editable-heading {
+  font-size: 1.4rem;
+  font-weight: 500;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  color: #212121;
+  width: 100%;
+  cursor: text;
+}
+
 
 

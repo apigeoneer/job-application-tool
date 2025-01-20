@@ -1,10 +1,14 @@
 import { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPen } from '@fortawesome/free-solid-svg-icons';
 import './MainContent.css';
 
-function MainContent({ activeProject, hasProjects }) {
+function MainContent({ activeProject, hasProjects, addProject, updateProjectName }) {
   const [jobDescription, setJobDescription] = useState('');
   const [resume, setResume] = useState(null);
   const [responseMessage, setResponseMessage] = useState('');
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedName, setEditedName] = useState(activeProject);
 
   const handleJobDescriptionChange = (e) => setJobDescription(e.target.value);
   const handleFileUpload = (e) => setResume(e.target.files[0]);
@@ -32,15 +36,52 @@ function MainContent({ activeProject, hasProjects }) {
   
       const result = await response.json();
       setResponseMessage({ text: result.message || 'Submission successful!', type: 'success' });
+
+      // Add the project to the sidebar
+      const newProject = `Project - ${new Date().toLocaleString()}`; // Example: dynamic project name
+      addProject(newProject);
     } catch (error) {
       setResponseMessage({ text: '*An error occurred. Please try again.', type: 'error' });
       console.error('*Error submitting data:', error);
     }
   };  
 
+  const handleEditClick = () => {
+    setIsEditing(true);
+  };
+
+  const handleEditKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      setIsEditing(false);
+      updateProjectName(editedName);
+    }
+  };
+
   return (
     <div className="main-content">
-      <h1>{hasProjects ? activeProject : 'Create a New Application'}</h1>
+    <div className="heading-wrapper">
+      {isEditing ? (
+        <input
+          type="text"
+          className="editable-heading"
+          value={editedName}
+          onChange={(e) => setEditedName(e.target.value)}
+          onKeyPress={handleEditKeyPress}
+          autoFocus
+        />
+      ) : (
+        <h1>
+          {hasProjects ? activeProject : 'Create a New Application'}
+          {hasProjects && (
+            <FontAwesomeIcon
+              icon={faPen}
+              className="edit-icon"
+              onClick={handleEditClick}
+            />
+          )}
+        </h1>
+      )}
+    </div>
           <div>
             <label>Paste Job Description:</label>
             <textarea
@@ -54,7 +95,7 @@ function MainContent({ activeProject, hasProjects }) {
           <div>
             <label>Upload Your Resume:</label>
             <input type="file" onChange={handleFileUpload} />
-            {resume && <p>Uploaded: {resume.name}</p>}
+            {resume && <p>Uploaded Resume: {resume.name}</p>}
           </div>
           <button onClick={handleSubmit} className="submit-button">
             Submit
