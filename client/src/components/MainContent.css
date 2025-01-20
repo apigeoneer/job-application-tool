@@ -21,3 +21,27 @@
 .main-content input[type="file"] {
   margin: 10px 0;
 }
+.resume-upload-text {
+  font-size: 0.8rem;
+}
+.submit-button {
+  margin-top: 20px;
+  padding: 6px 10px;
+  background-color: #457b9d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+.submit-button:hover {
+  background-color: #1d3557;
+}
+.response-message {
+  margin-top: 20px;
+  color: #e63946;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
