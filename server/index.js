@@ -1,7 +1,7 @@
 const express = require('express');
 const multer = require('multer');
+const fs = require('fs');
 const path = require('path');
-
 const app = express();
 const PORT = 5000;
 
@@ -19,15 +19,23 @@ app.post('/api/submit', upload.single('resume'), (req, res) => {
   const resumeFile = req.file;
 
   if (!jobDescription || !resumeFile) {
-    return res.status(400).json({ message: '*Job description and resume are required.' });
+    return res.status(400).json({ message: 'Job description and resume are required.' });
   }
 
-  // For now, just log the data and send a success message
-  console.log('Job Description:', jobDescription);
-  console.log('Uploaded Resume:', resumeFile);
+  const targetPath = path.join(__dirname, 'uploads', resumeFile.originalname);
+  fs.rename(resumeFile.path, targetPath, (err) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: 'File upload failed.' });
+    }
 
-  res.status(200).json({ message: 'Submission successful!' });
+    console.log('Job Description:', jobDescription);
+    console.log('Uploaded Resume:', targetPath);
+
+    res.status(200).json({ message: 'Submission successful!' });
+  });
 });
+
 
 // Start the server
 app.listen(PORT, () => {
