@@ -1,18 +1,17 @@
+import { useState } from 'react';
+import Sidebar from './components/Sidebar';
+import MainContent from './components/MainContent';
 import './App.css';
-import { useEffect, useState } from 'react';
-
 
 function App() {
-  const [message, setMessage] = useState('');
+  const [activeProject, setActiveProject] = useState(null);
 
-  useEffect(() => {
-    fetch('/')
-      .then((response) => response.text())
-      .then((data) => setMessage(data));
-  }, []);
-
-  // return <div>{message}</div>;
-  return <div>heyooo</div>;
+  return (
+    <div className="app">
+      <Sidebar setActiveProject={setActiveProject} />
+      <MainContent activeProject={activeProject} />
+    </div>
+  );
 }
 
 export default App;
