@@ -19,7 +19,7 @@ app.post('/api/submit', upload.single('resume'), (req, res) => {
   const resumeFile = req.file;
 
   if (!jobDescription || !resumeFile) {
-    return res.status(400).json({ message: 'Job description and resume are required.' });
+    return res.status(400).json({ message: '*Job description and resume are required.' });
   }
 
   // For now, just log the data and send a success message

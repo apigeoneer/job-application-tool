@@ -40,8 +40,15 @@
 }
 .response-message {
   margin-top: 20px;
-  color: #e63946;
   font-size: 0.8rem;
   font-weight: 500;
+  color: #e63946;
 }
+.response-message.success {
+  color: #38b000;
+}
+.response-message.error {
+  color: #e63946;
+}
+
 

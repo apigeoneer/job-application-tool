@@ -10,32 +10,37 @@ function MainContent({activeProject}) {
   const handleFileUpload = (e) => setResume(e.target.files[0]);
   
   const handleSubmit = async () => {
-    if (!jobDescription || !resume) {
-      setResponseMessage('*Please provide a job description and upload a resume.');
+    if (!jobDescription.trim()) {
+      setResponseMessage('*Job description cannot be empty.');
       return;
     }
-
+  
+    if (!resume) {
+      setResponseMessage('*Please upload your resume.');
+      return;
+    }
+  
     const formData = new FormData();
     formData.append('jobDescription', jobDescription);
     formData.append('resume', resume);
-
+  
     try {
       const response = await fetch('/api/submit', {
         method: 'POST',
         body: formData,
       });
-
+  
       const result = await response.json();
       setResponseMessage(result.message || 'Submission successful!');
     } catch (error) {
       setResponseMessage('*An error occurred. Please try again.');
-      console.error('Error submitting data:', error);
+      console.error('*Error submitting data:', error);
     }
-  };
+  };  
 
-  if (!activeProject) {
-    return <div className="main-content">Select a project to get started.</div>;
-  }
+  // if (!activeProject) {
+  //   return <div className="main-content">Select a project to get started.</div>;
+  // }
 
   return (
     <div className="main-content">
