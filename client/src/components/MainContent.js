@@ -82,11 +82,11 @@ function MainContent({ activeProject, hasProjects, addProject, updateProjectName
       )}
     </div>
           <div>
-            <label>Paste Job Description:</label>
+            <label>Add Job Description:</label>
             <textarea
               value={jobDescription}
               onChange={handleJobDescriptionChange}
-              placeholder="Paste the job description here..."
+              placeholder="Paste or write the job description here..."
               rows="6"
               cols="60"
             ></textarea>

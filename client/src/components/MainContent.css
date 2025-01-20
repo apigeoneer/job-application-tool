@@ -7,12 +7,13 @@
 }
 .main-content label {
   font-weight: 500;
-  font-size: 0.95rem;
+  font-size: 1rem;
   margin-top: 8px;
   display: block;
 }
 .main-content textarea {
-  width: 75%;
+  width: 55%;
+  min-width: 300px;
   margin: 10px 0;
   padding: 10px;
   border-radius: 4px;
@@ -23,7 +24,7 @@
 }
 .submit-button {
   margin-top: 10px;
-  padding: 6px 10px;
+  padding: 8px 20px;
   background-color: #3C3295;
   color: white;
   border: none;
@@ -34,6 +35,10 @@
 }
 .submit-button:hover {
   background-color: #32267D;
+}
+.submit-button:disabled {
+  background-color: #c7d2fe;
+  cursor: not-allowed;
 }
 .response-message {
   margin-top: 20px;
@@ -58,11 +63,10 @@
 }
 .editable-heading {
   font-size: 1.4rem;
-  font-weight: 500;
+  font-weight: 700;
   border: none;
   outline: none;
   background-color: transparent;
-  color: #212121;
   width: 100%;
   cursor: text;
 }
