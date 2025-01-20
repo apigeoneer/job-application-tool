@@ -4,11 +4,12 @@ import MainContent from './components/MainContent';
 import './App.css';
 
 function App() {
-  const [activeProject, setActiveProject] = useState(null);
+  const projects = [];
+  const [activeProject, setActiveProject] = useState(projects.length > 0 ? projects[0] : null);
 
   return (
     <div className="app">
-      <Sidebar setActiveProject={setActiveProject} />
+      <Sidebar projects={projects} setActiveProject={setActiveProject} />
       <MainContent activeProject={activeProject} />
     </div>
   );

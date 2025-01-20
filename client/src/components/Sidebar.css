@@ -18,4 +18,11 @@
     cursor: pointer;
     font-size: 0.9rem;
   }
+  .no-projects-message {
+    color: #a8dadc;
+    font-style: italic;
+    margin-top: 20px;
+    font-size: 0.8rem;
+  }
+  
   
