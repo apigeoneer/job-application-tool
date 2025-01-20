@@ -1,43 +1,26 @@
 const express = require('express');
-const multer = require('multer');
-const fs = require('fs');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 const path = require('path');
+const multer = require('multer');
+
+// Initialize app
 const app = express();
 const PORT = 5000;
 
-// Configure Multer to store uploaded files in the 'uploads' folder
-const upload = multer({
-  dest: path.join(__dirname, 'uploads'),
-});
+// Middleware
+app.use(bodyParser.json());
+app.use(cors());
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Middleware to parse JSON body data
-app.use(express.json());
+// MongoDB Connection
+mongoose
+  .connect('mongodb://localhost:27017/jobApplicationTool', { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('MongoDB connected'))
+  .catch((err) => console.error('MongoDB connection error:', err));
 
-// Route to handle job description and resume submission
-app.post('/api/submit', upload.single('resume'), (req, res) => {
-  const { jobDescription } = req.body;
-  const resumeFile = req.file;
-
-  if (!jobDescription || !resumeFile) {
-    return res.status(400).json({ message: 'Job description and resume are required.' });
-  }
-
-  const targetPath = path.join(__dirname, 'uploads', resumeFile.originalname);
-  fs.rename(resumeFile.path, targetPath, (err) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ message: 'File upload failed.' });
-    }
-
-    console.log('Job Description:', jobDescription);
-    console.log('Uploaded Resume:', targetPath);
-
-    res.status(200).json({ message: 'Submission successful!' });
-  });
-});
-
-
-// Start the server
+// Start Server
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
