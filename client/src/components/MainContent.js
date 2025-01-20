@@ -38,8 +38,7 @@ function MainContent({ activeProject, hasProjects, addProject, updateProjectName
       setResponseMessage({ text: result.message || 'Submission successful!', type: 'success' });
 
       // Add the project to the sidebar
-      const newProject = `Project - ${new Date().toLocaleString()}`; // Example: dynamic project name
-      addProject(newProject);
+      addProject();
     } catch (error) {
       setResponseMessage({ text: '*An error occurred. Please try again.', type: 'error' });
       console.error('*Error submitting data:', error);
@@ -71,7 +70,7 @@ function MainContent({ activeProject, hasProjects, addProject, updateProjectName
         />
       ) : (
         <h1>
-          {hasProjects ? activeProject : 'Create a New Application'}
+          {hasProjects ? activeProject : 'New Application'}
           {hasProjects && (
             <FontAwesomeIcon
               icon={faPen}

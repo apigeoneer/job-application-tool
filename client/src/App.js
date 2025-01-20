@@ -10,6 +10,7 @@ function App() {
   );
 
   const addProject = (newProject) => {
+    const newProjectName = `Application (${projects.length + 1})`;
     setProjects((prevProjects) => [...prevProjects, newProject]);
     setActiveProject(newProject);
   };

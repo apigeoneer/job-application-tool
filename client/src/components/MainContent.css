@@ -7,7 +7,7 @@
 }
 .main-content label {
   font-weight: 500;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   margin-top: 8px;
   display: block;
 }
@@ -22,18 +22,18 @@
   margin: 10px 0;
 }
 .submit-button {
-  margin-top: 20px;
+  margin-top: 10px;
   padding: 6px 10px;
-  background-color: #457b9d;
+  background-color: #3C3295;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 4px;
   cursor: pointer;
   font-size: 0.9rem;
   font-weight: 400;
 }
 .submit-button:hover {
-  background-color: #1d3557;
+  background-color: #32267D;
 }
 .response-message {
   margin-top: 20px;
