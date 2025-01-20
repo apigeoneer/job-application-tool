@@ -10,7 +10,7 @@ function Sidebar({ projects, setActiveProject }) {
         <FontAwesomeIcon
           icon={faPlus}
           className="add-icon"
-          onClick={() => setActiveProject(null)} // Clear active project
+          onClick={() => setActiveProject('New Application')} // Clear active project
         />
       </div>
       {projects.length > 0 ? (

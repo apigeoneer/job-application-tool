@@ -9,19 +9,19 @@ function App() {
     projects.length > 0 ? projects[0] : null
   );
 
-  const addProject = (newProject) => {
-    setProjects((prevProjects) => [...prevProjects, newProject]);
-    setActiveProject(newProject);
+  const addProject = () => {
+    const newProjectName = `New Application (${projects.length + 1})`;
+    setProjects((prevProjects) => [...prevProjects, newProjectName]);
+    setActiveProject(newProjectName);
   };
 
-  const updateProjectName = () => {
-    const newProjectName = `Application (${projects.length + 1})`;
+  const updateProjectName = (newName) => {
     setProjects((prevProjects) =>
       prevProjects.map((project) =>
-        project === activeProject ? newProjectName : project
+        project === activeProject ? newName : project
       )
     );
-    setActiveProject(newProjectName);
+    setActiveProject(newName);
   };
 
   return (
