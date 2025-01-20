@@ -1,5 +1,5 @@
 .main-content {
-  padding: 30px 70px;
+  padding: 40px 16% 40PX 10%;
   width: 100%;
 }
 .main-content h1 {
@@ -12,7 +12,7 @@
   display: block;
 }
 .main-content textarea {
-  width: 55%;
+  width: 100%;
   min-width: 300px;
   margin: 10px 0;
   padding: 10px;

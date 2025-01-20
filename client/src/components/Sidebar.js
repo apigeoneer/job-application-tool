@@ -1,9 +1,18 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import './Sidebar.css';
 
 function Sidebar({ projects, setActiveProject }) {
   return (
     <div className="sidebar">
-      <h2>Applications</h2>
+      <div className="sidebar-header">
+        <h2>Applications</h2>
+        <FontAwesomeIcon
+          icon={faPlus}
+          className="add-icon"
+          onClick={() => setActiveProject(null)} // Clear active project
+        />
+      </div>
       {projects.length > 0 ? (
         <ul>
           {projects.map((project, index) => (
