@@ -10,7 +10,7 @@ function App() {
   return (
     <div className="app">
       <Sidebar projects={projects} setActiveProject={setActiveProject} />
-      <MainContent activeProject={activeProject} />
+      <MainContent activeProject={activeProject} hasProjects={projects.length > 0} />
     </div>
   );
 }

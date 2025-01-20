@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './MainContent.css';
 
-function MainContent({activeProject}) {
+function MainContent({ activeProject, hasProjects }) {
   const [jobDescription, setJobDescription] = useState('');
   const [resume, setResume] = useState(null);
   const [responseMessage, setResponseMessage] = useState('');
@@ -11,12 +11,12 @@ function MainContent({activeProject}) {
   
   const handleSubmit = async () => {
     if (!jobDescription.trim()) {
-      setResponseMessage('*Job description cannot be empty.');
+      setResponseMessage({ text: '*Job description cannot be empty.', type: 'error' });
       return;
     }
   
     if (!resume) {
-      setResponseMessage('*Please upload your resume.');
+      setResponseMessage({ text: '*Please upload your resume.', type: 'error' });
       return;
     }
   
@@ -31,42 +31,39 @@ function MainContent({activeProject}) {
       });
   
       const result = await response.json();
-      setResponseMessage(result.message || 'Submission successful!');
+      setResponseMessage({ text: result.message || 'Submission successful!', type: 'success' });
     } catch (error) {
-      setResponseMessage('*An error occurred. Please try again.');
+      setResponseMessage({ text: '*An error occurred. Please try again.', type: 'error' });
       console.error('*Error submitting data:', error);
     }
   };  
 
-  // if (!activeProject) {
-  //   return <div className="main-content">Select a project to get started.</div>;
-  // }
-
   return (
     <div className="main-content">
-      <h1>{activeProject}</h1>
-      <div>
-        <label>Paste Job Description:</label>
-        <textarea
-          value={jobDescription}
-          onChange={handleJobDescriptionChange}
-          placeholder="Paste the job description here..."
-          rows="6"
-          cols="60"
-        ></textarea>
-      </div>
-      <div>
-        <label>Upload Your Resume:</label>
-        <input type="file" onChange={handleFileUpload} />
-        {/* {resume } */}
-        <div className='resume-upload-text'>
-          {resume && <p>Uploaded Resume: {resume.name}</p>}
-        </div>
-      </div>
-      <button onClick={handleSubmit} className="submit-button">
-        Submit
-      </button>
-      {responseMessage && <p className="response-message">{responseMessage}</p>}
+      <h1>{hasProjects ? activeProject : 'Create a New Application'}</h1>
+          <div>
+            <label>Paste Job Description:</label>
+            <textarea
+              value={jobDescription}
+              onChange={handleJobDescriptionChange}
+              placeholder="Paste the job description here..."
+              rows="6"
+              cols="60"
+            ></textarea>
+          </div>
+          <div>
+            <label>Upload Your Resume:</label>
+            <input type="file" onChange={handleFileUpload} />
+            {resume && <p>Uploaded: {resume.name}</p>}
+          </div>
+          <button onClick={handleSubmit} className="submit-button">
+            Submit
+          </button>
+          {responseMessage && (
+            <p className={`response-message ${responseMessage.type}`}>
+              {responseMessage.text}
+            </p>
+          )}
     </div>
   );
 }
