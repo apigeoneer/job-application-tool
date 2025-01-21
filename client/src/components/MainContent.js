@@ -54,7 +54,7 @@ function MainContent({ activeProject, hasProjects, addProject, updateProjectName
 
     setIsSubmitting(true); // Disable submit button
     try {
-      const response = await fetch('/api/submit', {
+      const response = await fetch('http://localhost:5000/api/applications', {
         method: 'POST',
         body: formData,
       });
