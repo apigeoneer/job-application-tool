@@ -29,6 +29,8 @@ const ResumeUpload = ({ resume, onChange }) => (
 function MainContent({ activeProject, hasProjects, addProject, updateProjectName }) {
   const [jobDescription, setJobDescription] = useState('');
   const [resume, setResume] = useState(null);
+  const [company, setCompany] = useState('');
+  const [role, setRole] = useState(''); 
   const [responseMessage, setResponseMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -51,6 +53,9 @@ function MainContent({ activeProject, hasProjects, addProject, updateProjectName
     const formData = new FormData();
     formData.append('jobDescription', jobDescription);
     formData.append('resume', resume);
+    formData.append('projectName', activeProject);
+    formData.append('company', company);
+    formData.append('role', role);   
 
     setIsSubmitting(true); // Disable submit button
     try {
@@ -58,6 +63,12 @@ function MainContent({ activeProject, hasProjects, addProject, updateProjectName
         method: 'POST',
         body: formData,
       });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Server Error Details:', errorData);
+        throw new Error(`HTTP error! status: ${response.status}, message: ${errorData.error || 'Unknown error'}`);
+      }
 
       const result = await response.json();
       setResponseMessage({ text: result.message || 'Submission successful!', type: 'success' });
@@ -69,8 +80,8 @@ function MainContent({ activeProject, hasProjects, addProject, updateProjectName
       setJobDescription('');
       setResume(null);
     } catch (error) {
-      setResponseMessage({ text: '*An error occurred. Please try again.', type: 'error' });
       console.error('*Error submitting data:', error);
+      setResponseMessage({ text: '*An error occurred. Please try again.', type: 'error' });
     } finally {
       setIsSubmitting(false); // Re-enable submit button
     }
@@ -123,10 +134,36 @@ function MainContent({ activeProject, hasProjects, addProject, updateProjectName
         )}
       </div>
 
+    {/* Company Input */}
+    <div className="mb-4">
+      <label className="block text-sm font-medium mb-1">Company:</label>
+      <input
+        type="text"
+        value={company}
+        onChange={(e) => setCompany(e.target.value)}
+        className="w-full p-2 border rounded"
+        placeholder="Enter company name"
+        required
+      />
+    </div>
+
+    {/* Role Input */}
+    <div className="mb-4">
+      <label className="block text-sm font-medium mb-1">Role:</label>
+      <input
+        type="text"
+        value={role}
+        onChange={(e) => setRole(e.target.value)}
+        className="w-full p-2 border rounded"
+        placeholder="Enter job role"
+        required
+      />
+    </div>  
+
       {/* Job Description Input */}
       <JobDescriptionInput
         jobDescription={jobDescription}
-        onChange={(e) => setJobDescription(e.target.value)}
+        onChange={handleJobDescriptionChange}
       />
 
       {/* Resume Upload */}
